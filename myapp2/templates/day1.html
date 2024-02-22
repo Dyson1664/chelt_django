@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Day1
+{% endblock %}
+
+{% block info %}
+
+        <!-- Content section-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>Champion's Day</h2>
+                        <p class="lead">The Cheltenham Festival is a horse racing-based meeting in the National Hunt racing calendar in the United Kingdom.</p>
+                        <p class="mb-0">Experience the palpable excitement of Day 1 of the Cheltenham Festival, as reigning and future Champions unite, all eager to carve their name into the star-studded wall of Jump Racing Greats. Featuring the Champion Hurdle, where the very best hurdlers compete to make history.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
+
+{% block second_image %}
+<div class="py-5 bg-image-full" style="background-image: url('{% static 'myapp2/images/day_pic.jpg' %}');">
+    <div style="height: 20rem"></div>
+</div>
+
+
+{% endblock %}
+
+{% block races_grid %}
+<<div class="container py-5"> <!-- Reduced padding in container -->
+    <h2 class="text-center">Day 1 Races</h2> <!-- Reduced margin below heading -->
+    <div class="table-responsive mx-auto" style="max-width: 800px;"> <!-- Removed py-5 from here -->
+    <table class="table table-bordered mb-5">
+
+               <thead>
+    <tr>
+        <th>Time</th>
+        <th>Race</th>
+        <th>Runners</th>
+        <th>Prize Money</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>1:30 PM</td>
+        <td>Supreme Novices’ Hurdle (Grade 1)</td>
+        <td>10</td>
+        <td>£120K (2023)</td>
+    </tr>
+    <tr>
+        <td>2:10 PM</td>
+        <td>Arkle Challenge Trophy Steeple Chase (Grade 1)</td>
+        <td>9</td>
+        <td>£130K (2023)</td>
+    </tr>
+    <tr>
+        <td>2:50 PM</td>
+        <td>Ultima Handicap Steeple Chase (Premier Handicap)</td>
+        <td>16</td>
+        <td>£110K (2023)</td>
+    </tr>
+    <tr>
+        <td>3:30 PM</td>
+        <td>Unibet Champion Hurdle Challenge Trophy (Grade 1)</td>
+        <td>8</td>
+        <td>£450K (2023)</td>
+    </tr>
+    <tr>
+        <td>4:10 PM</td>
+        <td>Close Brothers Mares’ Hurdle (Grade 1)</td>
+        <td>9</td>
+        <td>£120K (2023)</td>
+    </tr>
+    <tr>
+        <td>4:50 PM</td>
+        <td>Boodles Juvenile Handicap Hurdle (Grade 3)</td>
+        <td>14</td>
+        <td>£80K (2023)</td>
+    </tr>
+    <tr>
+        <td>5:30 PM</td>
+        <td>National Hunt Challenge Cup Amateur Riders’ Novices’ Chase (Grade 2)</td>
+        <td>9</td>
+        <td>£125K (2023)</td>
+    </tr>
+    <!-- Add more rows as needed -->
+</tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block day1_page %}
+<div class="video-container">
+    <video class="video1" width="40%" height="40%" controls>
+        <source src="{% static 'myapp2/videos/day1_video.mp4' %}" type="video/mp4">
+    </video>
+</div>
+
+{% endblock %}
+
+

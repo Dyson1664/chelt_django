@@ -1,1 +1,0 @@
-# chelt_django
