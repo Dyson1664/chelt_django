@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Day4
+{% endblock %}
+
+{% block info %}
+
+        <!-- Content section-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>Gold Cup Day</h2>
+                        <p class="lead">The Cheltenham Festival is a horse racing-based meeting in the National Hunt racing calendar in the United Kingdom.</p>
+                        <p class="mb-0">The pinnacle of Jump Racing, where winners go down in history and legends are born. Gold Cup Day is something quite incredible, indescribably amazing. The racing, the atmosphere, the entertainment. This year is going to be bigger and better than ever before as we celebrate 100 years of the Cheltenham Gold Cup.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
+
+{% block second_image %}
+<div class="py-5 bg-image-full" style="background-image: url('{% static 'myapp2/images/day_pic.jpg' %}');">
+    <div style="height: 20rem"></div>
+    </div>
+
+{% endblock %}
+
+
+{% block races_grid %}
+<<div class="container py-5"> <!-- Reduced padding in container -->
+    <h2 class="text-center">Day 4 Races</h2> <!-- Reduced margin below heading -->
+    <div class="table-responsive mx-auto" style="max-width: 800px;"> <!-- Removed py-5 from here -->
+    <table class="table table-bordered mb-5">
+
+                <thead>
+    <tr>
+        <th>Time</th>
+        <th>Race</th>
+        <th>Runners</th>
+        <th>Prize Money</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>1:30 PM</td>
+        <td>JCB Triumph Hurdle (Grade 1)</td>
+        <td>11</td>
+        <td>£45K (2023)</td>
+    </tr>
+    <tr>
+        <td>2:10 PM</td>
+        <td>County Handicap Hurdle (Premier Handicap)</td>
+        <td>16</td>
+        <td>£40K (2023)</td>
+    </tr>
+    <tr>
+        <td>2:50 PM</td>
+        <td>Albert Bartlett Novices’ Hurdle (Grade 1)</td>
+        <td>10</td>
+        <td>£55K (2023)</td>
+    </tr>
+    <tr>
+        <td>3:30 PM</td>
+        <td>Cheltenham Gold Cup Chase (Grade 1)</td>
+        <td>11</td>
+        <td>£614,813 (2023)</td>
+    </tr>
+    <tr>
+        <td>4:10 PM</td>
+        <td>St James’s Place Foxhunter Chase</td>
+        <td>8</td>
+        <td>£45K (2023)</td>
+    </tr>
+    <tr>
+        <td>4:50 PM</td>
+        <td>Mares Chase (Grade 2)</td>
+        <td>8</td>
+        <td>£43K (2023)</td>
+    </tr>
+    <tr>
+        <td>5:30 PM</td>
+        <td>Martin Pipe Conditional Jockeys’ Handicap Hurdle</td>
+        <td>13</td>
+        <td>£70K (2023)</td>
+    </tr>
+    <!-- Add more rows as needed -->
+</tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block day1_page %}
+<div class="video-container">
+    <video class="video1" width="40%" height="40%" controls>
+        <source src="{% static 'myapp2/videos/day4_video.mp4' %}" type="video/mp4">
+    </video>
+</div>
+
+{% endblock %}
