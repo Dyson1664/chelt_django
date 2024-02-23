@@ -34,7 +34,7 @@ DEBUG = False
 
 # ALLOWED_HOSTS = []
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -99,7 +99,7 @@ DATABASES = {
 }
 
 #add when deploying, comment out locally
-DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
+# DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -158,15 +158,7 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django_redis.cache.RedisCache',
-#         'LOCATION': 'redis://127.0.0.1:6379/1',  # Memurai uses Redis' default port
-#         'OPTIONS': {
-#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#         }
-#     }
-# }
+
 REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379')  # Default to local Redis
 
 CACHES = {
