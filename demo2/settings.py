@@ -153,19 +153,32 @@ USE_TZ = True
 #here
 
 
+# STATIC_URL = '/static/'
+#
+# MEDIA_URL = '/media/'
+#
+# if DEBUG:
+#
+#     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+#
+# else:
+#
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
-if DEBUG:
-
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-else:
-
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+    # Note: Changed to 'staticfiles' to avoid conflict
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
