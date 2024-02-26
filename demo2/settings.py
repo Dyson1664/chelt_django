@@ -34,7 +34,7 @@ DEBUG = 'RENDER' not in os.environ
 
 # ALLOWED_HOSTS = []
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -99,7 +99,7 @@ DATABASES = {
 }
 
 #add when deploying, comment out locally
-# DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
+DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -167,17 +167,20 @@ USE_TZ = True
 #
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 if DEBUG:
+
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 else:
-    # Note: Changed to 'staticfiles' to avoid conflict
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
