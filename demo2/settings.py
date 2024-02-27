@@ -152,7 +152,8 @@ USE_TZ = True
 #     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #here
 
-#
+
+
 # STATIC_URL = '/static/'
 #
 # MEDIA_URL = '/media/'
@@ -162,25 +163,19 @@ USE_TZ = True
 #     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 #
 # else:
-#
+
 #     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#
+
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-STATIC_URL = '/static/'
-
 MEDIA_URL = '/media/'
-
-if DEBUG:
-
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-else:
-
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_URL = '/static/'
+STATIC_FILE_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "staticfiles"), # Change this to a different directory for your source static files
+)
+STATIC_ROOT = os.path.join(BASE_DIR, "static", "assets")
 
 
 # Default primary key field type
