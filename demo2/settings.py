@@ -28,8 +28,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = 'RENDER' not in os.environ
+DEBUG = True
+# DEBUG = 'RENDER' not in os.environ
 
 
 # ALLOWED_HOSTS = []
@@ -99,7 +99,7 @@ DATABASES = {
 }
 
 #add when deploying, comment out locally
-DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
+# DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -171,7 +171,7 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATIC_URL = '/static/'
-STATIC_FILE_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_FILE_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "staticfiles"), # Change this to a different directory for your source static files
 )

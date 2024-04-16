@@ -97,12 +97,25 @@ Day1
 {% endblock %}
 
 {% block day1_page %}
-<div class="video-container">
-    <video class="video1" width="40%" height="40%" controls>
-        <source src="{% static 'myapp2/videos/day1_video.mp4' %}" type="video/mp4">
+<div class="video-container" style="text-align:center;">  <!-- Center the video container -->
+    <!-- Video initially not loaded, clickable to load and play, with a poster indicating it's clickable -->
+    <video class="video1" width="640" height="360" controls poster="{% static 'myapp2/images/play_vid.webp' %}" onclick="loadAndPlayVideo(this)">
+        <source data-src="{% static 'myapp2/videos/day1_video.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
     </video>
 </div>
 
+<script>
+    function loadAndPlayVideo(videoElement) {
+        if (!videoElement.src) {  // Check if the video hasn't been loaded yet
+            var source = videoElement.getElementsByTagName('source')[0];  // Get the source element
+            videoElement.src = source.getAttribute('data-src');  // Set the src from data-src
+            videoElement.load();  // Load the video
+            videoElement.play();  // Auto-play after loading
+            videoElement.onclick = null;  // Remove the onclick event to prevent reloading on further clicks
+        }
+    }
+</script>
 {% endblock %}
 
 
