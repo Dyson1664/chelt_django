@@ -43,19 +43,20 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
+    'myapp2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'myapp2'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -168,14 +169,21 @@ USE_TZ = True
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+#*******
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# STATIC_URL = '/static/'
+# # STATIC_FILE_ROOT = os.path.join(BASE_DIR, "static")
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "staticfiles"), # Change this to a different directory for your source static files
+# )
+# STATIC_ROOT = os.path.join(BASE_DIR, "static", "assets")
+#********
+
 STATIC_URL = '/static/'
-# STATIC_FILE_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "staticfiles"), # Change this to a different directory for your source static files
-)
-STATIC_ROOT = os.path.join(BASE_DIR, "static", "assets")
+STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 # Default primary key field type
