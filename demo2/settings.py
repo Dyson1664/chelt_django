@@ -88,19 +88,27 @@ WSGI_APPLICATION = 'demo2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# old postgres db used when deployed on Render. Too expensive to run
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'results',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234567890',
+#         'HOST': 'localhost',   # Set to empty string for localhost.
+#         'PORT': '',            # Set to empty string for default.
+#     }
+# }
+#add when deploying, comment out locally
+# DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'results',
-        'USER': 'postgres',
-        'PASSWORD': '1234567890',
-        'HOST': 'localhost',   # Set to empty string for localhost.
-        'PORT': '',            # Set to empty string for default.
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-#add when deploying, comment out locally
-DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -131,55 +139,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-#here can delete
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/4.2/howto/static-files/
-#
-# # STATIC_URL = 'static/'
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/5.0/howto/static-files/
-#
-# # This setting informs Django of the URI path from which your static files will be served to users
-# # Here, they well be accessible at your-domain.onrender.com/static/... or yourcustomdomain.com/static/...
-# STATIC_URL = '/static/'
-#
-# # This production code might break development mode, so we check whether we're in DEBUG mode
-# if not DEBUG:
-#     # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#     # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-#     # and renames the files with unique names for each version to support long-term caching
-#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-#here
-
-
-
-# STATIC_URL = '/static/'
-#
-# MEDIA_URL = '/media/'
-#
-# if DEBUG:
-#
-#     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-#
-# else:
-
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-#*******
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-# STATIC_URL = '/static/'
-# # STATIC_FILE_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, "staticfiles"), # Change this to a different directory for your source static files
-# )
-# STATIC_ROOT = os.path.join(BASE_DIR, "static", "assets")
-#********
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
@@ -232,7 +191,7 @@ LOGGING = {
         },
         'myapp2': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
         },
     }
 }

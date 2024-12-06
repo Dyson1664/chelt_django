@@ -10846,8 +10846,9 @@ textarea.form-control-lg {
 }
 
 .video1 {
-    border: solid black 2px;
+    border: solid black 16px;
 }
+
 
 .test {
     font-size: 50px;
