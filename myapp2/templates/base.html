@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Website{% endblock %}</title>
         {% load static %}
-
-
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'myapp2/css/styles.css' %}">
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'myapp2/images/favicon-32x32.png' %}">
@@ -27,7 +27,6 @@
                 </div>
             </div>
         </nav>
-
 <header class="bg-image-full" style="background-image: url('{% static 'myapp2/images/home_chelt.jpg' %}'); height: 400px;">
 </header>
 <div id="base-loading" style="display: none;">
