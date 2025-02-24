@@ -167,17 +167,19 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379')  # Default to local Redis
+#
+# remove when running locally
+REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379')  # Default to local Redis
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django_redis.cache.RedisCache',
-#         'LOCATION': REDIS_URL,
-#         'OPTIONS': {
-#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#         },
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': REDIS_URL,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+    }
+}
 # import sys
 # LOGGING = {
 #     'version': 1,
