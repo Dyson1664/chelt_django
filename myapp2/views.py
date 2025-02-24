@@ -142,7 +142,7 @@ def races(request):
 
 
 #Enter line if running locally
-#   $Env:DATABASE_URL='postgres://postgres:1234567890@localhost/results'
+# DATABASE_URL='postgres://postgres:1234567890@localhost/results'
 
 from django.http import JsonResponse
 from django.db import connection
@@ -152,11 +152,26 @@ def results(request):
 
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         try:
-            race = json.loads(request.body).get('race')
+            race_value = json.loads(request.body).get('race')
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM winners WHERE race = %s", [race])
-                data['rows'] = cursor.fetchall()
-        except Exception as error:  # It's better to catch more specific exceptions
+                cursor.execute("""
+                    SELECT
+                      year,
+                      first_horse,
+                      first_jockey,
+                      first_trainer,
+                      second_horse,
+                      second_jockey,
+                      second_trainer,
+                      third_horse,
+                      third_jockey,
+                      third_trainer
+                    FROM winners2
+                    WHERE race_name = %s
+                    ORDER BY year DESC
+                """, [race_value])
+                data['rows'] = cursor.fetchall()  # List of tuples
+        except Exception as error:
             data['error'] = str(error)
 
         return JsonResponse(data)

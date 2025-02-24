@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block title %}
@@ -7,63 +6,62 @@ results_test
 {% endblock %}
 
 {% block results %}
-<!DOCTYPE html>
-<html>
+<!-- Remove <!DOCTYPE html> or <html>/<body> tags here because we're extending base.html -->
 <head>
     <link rel="stylesheet" href="{% static 'myapp2/css/styles.css' %}">
 </head>
-<body>
-    <h1 class="h2win">Previous Winners</h1>
 
-    <div class="container-winners">
-        <!-- Day 1 Races -->
-        <div class="container-info">
-            <p class="winners">Day 1</p>
-            <button class="winners winners1" data-race="supreme novices hurdle">Supreme</button>
-            <button class="winners winners1" data-race="arkle">Arkle</button>
-            <button class="winners winners1" data-race="champion_hurdle">Champion Hurdle</button>
-        </div>
+<h1 class="h2win">Previous Winners</h1>
 
-        <!-- Day 2 Races -->
-        <div class="container-info">
-            <p class="winners">Day 2</p>
-            <button class="winners winners1" data-race="ballymore novices hurdle">Ballymore</button>
-            <button class="winners winners1" data-race="rsa">RSA</button>
-            <button class="winners winners1" data-race="queen mother champion chase">Champion Chase</button>
-        </div>
-
-        <!-- Day 3 Races -->
-        <div class="container-info">
-            <p class="winners">Day 3</p>
-            <button class="winners winners1" data-race="turners novices chase">Turners</button>
-            <button class="winners winners1" data-race="ryanair">Ryanair</button>
-            <button class="winners winners1" data-race="stayers hurdle">Stayers Hurdle</button>
-        </div>
-
-        <!-- Day 4 Races -->
-        <div class="container-info">
-            <p class="winners">Day 4</p>
-            <button class="winners winners1" data-race="triumph">Triumph</button>
-            <button class="winners winners1" data-race="gold cup">Gold Cup</button>
-            <button class="winners winners1" data-race="martin pipe">Martin Pipe</button>
-        </div>
+<div class="container-winners">
+    <!-- Day 1 Races -->
+    <div class="container-info">
+        <p class="winners">Day 1</p>
+        <button class="winners winners1" data-race="supreme novices hurdle">Supreme</button>
+        <button class="winners winners1" data-race="arkle">Arkle</button>
+        <button class="winners winners1" data-race="champion_hurdle">Champion Hurdle</button>
     </div>
 
-    <div class="container-res" id="results-container">
-        <!-- Results will be displayed here -->
+    <!-- Day 2 Races -->
+    <div class="container-info">
+        <p class="winners">Day 2</p>
+        <button class="winners winners1" data-race="ballymore novices hurdle">Ballymore</button>
+        <button class="winners winners1" data-race="rsa">RSA</button>
+        <button class="winners winners1" data-race="queen mother champion chase">Champion Chase</button>
     </div>
 
-    <script>
+    <!-- Day 3 Races -->
+    <div class="container-info">
+        <p class="winners">Day 3</p>
+        <button class="winners winners1" data-race="turners novices chase">Turners</button>
+        <button class="winners winners1" data-race="ryanair">Ryanair</button>
+        <button class="winners winners1" data-race="stayers hurdle">Stayers Hurdle</button>
+    </div>
+
+    <!-- Day 4 Races -->
+    <div class="container-info">
+        <p class="winners">Day 4</p>
+        <button class="winners winners1" data-race="triumph">Triumph</button>
+        <button class="winners winners1" data-race="gold cup">Gold Cup</button>
+        <button class="winners winners1" data-race="martin pipe">Martin Pipe</button>
+    </div>
+</div>
+
+<div class="container-res" id="results-container">
+    <!-- Results will be displayed here -->
+</div>
+
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.winners1');  // Select all your race buttons
 
     buttons.forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
-            var raceValue = this.getAttribute('data-race'); // Retrieve the race value
+            const raceValue = this.getAttribute('data-race'); // Retrieve the race value
 
-            // Send a POST request to your Django view
-            fetch('{% url 'results' %}', {
+            // Send a POST request to your Django 'results' view
+            fetch('{% url "results" %}', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -90,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateResultsTable(rows) {
     const resultsContainer = document.getElementById('results-container');
     resultsContainer.innerHTML = ''; // Clear existing content
+
     if (!rows.length) {
         resultsContainer.innerHTML = '<p>No results found.</p>';
         return;
@@ -101,17 +100,19 @@ function updateResultsTable(rows) {
     // Creating the first header row
     const thead = document.createElement('thead');
     const headerRow1 = document.createElement('tr');
+
+    // 'Year' (rowSpan=2)
     const yearHeader = document.createElement('th');
     yearHeader.textContent = 'Year';
-    yearHeader.rowSpan = 2; // Span through two rows
+    yearHeader.rowSpan = 2;
     headerRow1.appendChild(yearHeader);
 
-    // Creating placeholders for 1st, 2nd, and 3rd places
+    // 1st, 2nd, 3rd place
     const placeHeaders = ['1st Place', '2nd Place', '3rd Place'];
     placeHeaders.forEach(place => {
         const th = document.createElement('th');
         th.textContent = place;
-        th.colSpan = 3; // Span across three columns for each place
+        th.colSpan = 3; // Horse, Jockey, Trainer
         headerRow1.appendChild(th);
     });
 
@@ -119,7 +120,7 @@ function updateResultsTable(rows) {
 
     // Creating the second header row
     const headerRow2 = document.createElement('tr');
-    for (let i = 0; i < 3; i++) { // For each place
+    for (let i = 0; i < 3; i++) {
         ['Horse', 'Jockey', 'Trainer'].forEach(role => {
             const th = document.createElement('th');
             th.textContent = role;
@@ -132,10 +133,11 @@ function updateResultsTable(rows) {
 
     // Creating the tbody with data
     const tbody = document.createElement('tbody');
+
     rows.forEach(row => {
         const tr = document.createElement('tr');
-        // Here, ensure you're adjusting according to the actual data structure received
-        row.slice(0, -2).forEach(cell => { // Adjust this line if necessary to remove unwanted data
+        // Instead of row.slice(0, -2), just loop over all columns
+        row.forEach(cell => {
             const td = document.createElement('td');
             td.textContent = cell;
             tr.appendChild(td);
@@ -146,7 +148,5 @@ function updateResultsTable(rows) {
     table.appendChild(tbody);
     resultsContainer.appendChild(table);
 }
-    </script>
-</body>
-</html>
-{% endblock %}
+</script>
+{% endblock results %}
