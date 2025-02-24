@@ -11348,3 +11348,44 @@ body {
 table th {
     padding: 6px; /* Adjust the value as needed */
 }
+
+.container1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.images1 {
+    height: 300px;
+    width: 300px;
+    border: 2px solid #323643;
+}
+
+@media (max-width: 768px) {
+  /* Stack items vertically on mobile */
+  .container1 {
+    flex-direction: column;
+    align-items: center; /* center the content */
+    padding: 20px;      /* smaller padding on mobile */
+  }
+
+  /* Make images fluid */
+  .images1 {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  /* Center text in the .one container for smaller screens */
+  .one {
+    margin: 1rem 0;
+    text-align: center;
+  }
+}
+
+/* RESULTS PAGE Mobile Overrides */
+
