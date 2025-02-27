@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block title %}
@@ -7,146 +6,133 @@ results_test
 {% endblock %}
 
 {% block results %}
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="{% static 'myapp2/css/styles.css' %}">
-</head>
-<body>
-    <h1 class="h2win">Previous Winners</h1>
+<h1 class="h2win">Previous Winners</h1>
 
-    <div class="container-winners">
-        <!-- Day 1 Races -->
-        <div class="container-info">
-            <p class="winners">Day 1</p>
-            <button class="winners winners1" data-race="supreme novices hurdle">Supreme</button>
-            <button class="winners winners1" data-race="arkle">Arkle</button>
-            <button class="winners winners1" data-race="champion_hurdle">Champion Hurdle</button>
-        </div>
+<div class="container-winners">
+  <!-- Day 1 Races -->
+  <div class="container-info">
+    <p class="winners">Day 1</p>
+    <button class="winners winners1" data-race="supreme novices hurdle">Supreme</button>
+    <button class="winners winners1" data-race="arkle">Arkle</button>
+    <button class="winners winners1" data-race="champion_hurdle">Champion Hurdle</button>
+  </div>
+  <!-- Day 2 Races -->
+  <div class="container-info">
+    <p class="winners">Day 2</p>
+    <button class="winners winners1" data-race="ballymore novices hurdle">Ballymore</button>
+    <button class="winners winners1" data-race="rsa">RSA</button>
+    <button class="winners winners1" data-race="queen mother champion chase">Champion Chase</button>
+  </div>
+  <!-- Day 3 Races -->
+  <div class="container-info">
+    <p class="winners">Day 3</p>
+    <button class="winners winners1" data-race="turners novices chase">Turners</button>
+    <button class="winners winners1" data-race="ryanair">Ryanair</button>
+    <button class="winners winners1" data-race="stayers hurdle">Stayers Hurdle</button>
+  </div>
+  <!-- Day 4 Races -->
+  <div class="container-info">
+    <p class="winners">Day 4</p>
+    <button class="winners winners1" data-race="triumph">Triumph</button>
+    <button class="winners winners1" data-race="gold cup">Gold Cup</button>
+    <button class="winners winners1" data-race="martin pipe">Martin Pipe</button>
+  </div>
+</div>
 
-        <!-- Day 2 Races -->
-        <div class="container-info">
-            <p class="winners">Day 2</p>
-            <button class="winners winners1" data-race="ballymore novices hurdle">Ballymore</button>
-            <button class="winners winners1" data-race="rsa">RSA</button>
-            <button class="winners winners1" data-race="queen mother champion chase">Champion Chase</button>
-        </div>
+<div class="container-res" id="results-container">
+  <!-- Results will be displayed here by JavaScript -->
+</div>
 
-        <!-- Day 3 Races -->
-        <div class="container-info">
-            <p class="winners">Day 3</p>
-            <button class="winners winners1" data-race="turners novices chase">Turners</button>
-            <button class="winners winners1" data-race="ryanair">Ryanair</button>
-            <button class="winners winners1" data-race="stayers hurdle">Stayers Hurdle</button>
-        </div>
-
-        <!-- Day 4 Races -->
-        <div class="container-info">
-            <p class="winners">Day 4</p>
-            <button class="winners winners1" data-race="triumph">Triumph</button>
-            <button class="winners winners1" data-race="gold cup">Gold Cup</button>
-            <button class="winners winners1" data-race="martin pipe">Martin Pipe</button>
-        </div>
-    </div>
-
-    <div class="container-res" id="results-container">
-        <!-- Results will be displayed here -->
-    </div>
-
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.winners1');  // Select all your race buttons
-
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.winners1');
     buttons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            var raceValue = this.getAttribute('data-race'); // Retrieve the race value
-
-            // Send a POST request to your Django view
-            fetch('{% url 'results' %}', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ race: raceValue })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error('Error:', data.error);
-                } else {
-                    updateResultsTable(data.rows);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        var raceValue = this.getAttribute('data-race');
+        fetch('{% url "results" %}', {
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ race: raceValue })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            console.error('Error:', data.error);
+          } else {
+            updateResultsTable(data.rows);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
         });
+      });
     });
-});
+  });
 
-function updateResultsTable(rows) {
+  function updateResultsTable(rows) {
     const resultsContainer = document.getElementById('results-container');
-    resultsContainer.innerHTML = ''; // Clear existing content
+    resultsContainer.innerHTML = '';
     if (!rows.length) {
-        resultsContainer.innerHTML = '<p>No results found.</p>';
-        return;
+      resultsContainer.innerHTML = '<p>No results found.</p>';
+      return;
     }
 
     const table = document.createElement('table');
     table.className = 'table table-striped table-hover custom-table';
 
-    // Creating the first header row
+    // Create first header row
     const thead = document.createElement('thead');
     const headerRow1 = document.createElement('tr');
     const yearHeader = document.createElement('th');
     yearHeader.textContent = 'Year';
-    yearHeader.rowSpan = 2; // Span through two rows
+    yearHeader.rowSpan = 2;
     headerRow1.appendChild(yearHeader);
 
-    // Creating placeholders for 1st, 2nd, and 3rd places
     const placeHeaders = ['1st Place', '2nd Place', '3rd Place'];
     placeHeaders.forEach(place => {
-        const th = document.createElement('th');
-        th.textContent = place;
-        th.colSpan = 3; // Span across three columns for each place
-        headerRow1.appendChild(th);
+      const th = document.createElement('th');
+      th.textContent = place;
+      th.colSpan = 3;
+      headerRow1.appendChild(th);
     });
-
     thead.appendChild(headerRow1);
 
-    // Creating the second header row
+    // Create second header row
     const headerRow2 = document.createElement('tr');
-    for (let i = 0; i < 3; i++) { // For each place
-        ['Horse', 'Jockey', 'Trainer'].forEach(role => {
-            const th = document.createElement('th');
-            th.textContent = role;
-            headerRow2.appendChild(th);
-        });
+    for (let i = 0; i < 3; i++) {
+      ['Horse', 'Jockey', 'Trainer'].forEach(role => {
+        const th = document.createElement('th');
+        th.textContent = role;
+        headerRow2.appendChild(th);
+      });
     }
-
     thead.appendChild(headerRow2);
     table.appendChild(thead);
 
-    // Creating the tbody with data
+    // Create tbody with data rows (looping over entire row)
     const tbody = document.createElement('tbody');
     rows.forEach(row => {
-        const tr = document.createElement('tr');
-        // Here, ensure you're adjusting according to the actual data structure received
-        row.slice(0, -2).forEach(cell => { // Adjust this line if necessary to remove unwanted data
-            const td = document.createElement('td');
-            td.textContent = cell;
-            tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
+      const tr = document.createElement('tr');
+      row.forEach(cell => {
+        const td = document.createElement('td');
+        td.textContent = cell;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
     });
-
     table.appendChild(tbody);
-    resultsContainer.appendChild(table);
-}
-    </script>
-</body>
-</html>
+
+    // Wrap table in responsive container
+    const tableWrapper = document.createElement('div');
+    tableWrapper.classList.add('responsive-table-container');
+    tableWrapper.appendChild(table);
+
+    resultsContainer.appendChild(tableWrapper);
+  }
+</script>
 {% endblock %}

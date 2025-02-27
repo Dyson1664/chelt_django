@@ -10943,12 +10943,15 @@ Why then can i use align items: flex-end to push the boxes horizontally to the r
 }
 
 .race-name {
-    text-align: center;
-    color: gray;
-    font-weight: bold
-    font-size: 40px;/* This sets the text color to pink */
+  text-align: center;
+  color: gray;
+  font-weight: bold;
+  max-width: 300px; /* Set a maximum width for the race name */
+  margin: 0 auto;   /* Center it horizontally */
+  font-size: clamp(20px, 5vw, 40px);
+  /* Optionally, allow wrapping if needed */
+  white-space: normal;
 }
-
 
 
 .race-info {
@@ -11123,20 +11126,26 @@ Why then can i use align items: flex-end to push the boxes horizontally to the r
 
 
 
+/* Adjust the container-res so it doesn't add big padding */
 .container-res {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
+  /* For example, minimal vertical padding */
+  padding: 0 1rem;
+  margin: 0 auto;
+  width: 80%
 }
 
 .results-table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
+    text-align: center;
     font-size: 0.9em;
 }
+
+.responsive-table-container table {
+  margin: 0 auto;
+}
+
+
 
 .results-table thead th {
     background-color: #778899;
@@ -11158,13 +11167,13 @@ Why then can i use align items: flex-end to push the boxes horizontally to the r
     border-bottom: none;
 }
 
+/* Reduce the large padding in the heading if desired */
 .h2win {
-    text-align: center;
-    padding-top: 120px;
-    padding-bottom: 50px;
-
-
-    }
+  text-align: center;
+  /* Previously 120px top / 50px bottom */
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
 
 
 
@@ -11263,6 +11272,7 @@ Why then can i use align items: flex-end to push the boxes horizontally to the r
     padding-bottom: 100px;
 
 
+
 }
 
 .racecourse {
@@ -11330,7 +11340,7 @@ body {
 }
 
 .race-details {
-    padding-bottom: 40px; /* Adjust this value as per your design */
+    padding-bottom: 40px;
 }
 
 .backtable {
@@ -11387,5 +11397,128 @@ table th {
   }
 }
 
-/* RESULTS PAGE Mobile Overrides */
+/* The scroll is confined to this wrapper */
+.responsive-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Remove large vertical padding so no big empty space */
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+
+.custom-table {
+  width: 100%;   /* Ensures the table fills the container */
+  border-collapse: collapse;
+}
+
+.custom-table th,
+.custom-table td {
+  background-color: #fff; /* Also ensure individual cells aren't transparent */
+}
+
+/* ---------------------------------- */
+/* Mobile-Specific Tweaks             */
+/* ---------------------------------- */
+@media (max-width: 768px) {
+  .bg-image-full {
+    width: 100% !important;
+    min-height: 50vh !important; /* half the viewport on mobile */
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+}
+
+
+/* ----- 2. Horizontal scroll for the container-winners (Days/Races buttons) on mobile ----- */
+@media (max-width: 768px) {
+
+  /* Instead of a vertical stack, let's allow horizontal scroll for day blocks */
+  .container-winners {
+    display: flex;
+    flex-wrap: nowrap;       /* keep items in one row */
+    overflow-x: auto;        /* horizontal scroll if needed */
+    -webkit-overflow-scrolling: touch;  /* smooth scroll on iOS */
+    width: 100% !important;  /* span the screen */
+    margin: 0 auto 1rem auto; /* some spacing at bottom */
+    padding: 0.5rem 0;       /* vertical padding for clarity */
+  }
+
+  .container-info {
+    flex: 0 0 auto;          /* don't shrink */
+    width: auto;             /* let content dictate width */
+    margin-right: 1rem;      /* spacing between day blocks */
+    align-items: center;
+  }
+
+  /* Style .winners differently so they fit in a horizontal row */
+  .winners {
+    margin: 0.5rem;          /* spacing for each button or text */
+  }
+}
+
+/* ----- 3. Horizontal scroll for .container-res (Results table) ----- */
+@media (max-width: 768px) {
+  .container-res {
+    overflow-x: auto;        /* horizontal scroll */
+    -webkit-overflow-scrolling: touch;
+  }
+  .responsive-table-container {
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+  .responsive-table-container table {
+    width: auto;             /* table grows to content width */
+    min-width: 600px;        /* or some suitable min to prevent squashing */
+  }
+}
+
+/* ----- 4. Ensure footer is full-width (already is by default, but let's confirm) ----- */
+@media (max-width: 768px) {
+  footer.py-5.bg-dark {
+    width: 100% !important;
+    text-align: center; /* if you want center text on mobile */
+  }
+}
+  /* Adjust the "Today's Races" layout so columns stack if needed */
+  .racecourse .row {
+    flex-direction: column;
+    align-items: center;
+  }
+  .racecourse .col-md-3,
+  .racecourse .col-md-6 {
+    max-width: 100%;
+    flex: 0 0 auto;
+    margin-bottom: 1rem;
+    text-align: center; /* Center them on mobile */
+  }
+
+  /* Optional: shrink headings or adjust font sizes if needed */
+  .racecourse h3 {
+    font-size: 1.2rem;
+  }
+  .race-time-link {
+    margin-right: 0.5rem;
+  }
+
+/* Put this near the bottom of your CSS (after your mobile queries) */
+
+@media (min-width: 992px) {
+  /* This ensures the table container is 80% wide on desktop only */
+  .responsive-table-container {
+    overflow-x: visible; /* or remove overflow-x: auto; */
+
+    width: 100% !important;
+    margin: 0 auto;  /* center horizontally */
+  }
+}
+  .responsive-table-container table td,
+  .responsive-table-container table th {
+    padding: 0.75rem 1rem; /* Increase table cell padding */
+    font-size: 1rem;       /* Slightly larger text */
+  }
+}
 

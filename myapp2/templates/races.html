@@ -1,131 +1,103 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
-{% block title %}
-races
-{% endblock %}
+{% block title %}races{% endblock %}
 
 {% block races %}
-
 <script>
-function fetchRaceDetails(location) {
-    fetch(`/get-race-details?location=${location}`)
-        .then(response => response.json())
-        .then(data => {
-            // Update the #race-details div with the fetched data
-            document.getElementById('race-details').innerHTML = formatRaceDetails(data);
-        });
-}
-
-function formatRaceDetails(data) {
-    // Format the race details into HTML
-    // This is where you define how you want to display the race details
-    return '<div>' + JSON.stringify(data) + '</div>'; // Example formatting
-}
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
+  // Your existing race details toggle code remains unchanged…
+  document.addEventListener("DOMContentLoaded", function() {
     const raceLinks = document.querySelectorAll('.racecourse a[data-toggle="collapse"]');
-
     raceLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            // Close all open race details except for the clicked one
-            const clickedRaceDetailId = this.getAttribute('href').substring(1);
-            const allRaceDetails = document.querySelectorAll('.racecourse .collapse');
-            allRaceDetails.forEach(function(detail) {
-                if (detail.id !== clickedRaceDetailId) {
-                    detail.classList.remove('show');
-                }
-            });
-
-            // Toggle the clicked race detail
-            const raceDetailDiv = document.getElementById(clickedRaceDetailId);
-            raceDetailDiv.classList.toggle('show');
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        const clickedRaceDetailId = this.getAttribute('href').substring(1);
+        const allRaceDetails = document.querySelectorAll('.racecourse .collapse');
+        allRaceDetails.forEach(function(detail) {
+          if (detail.id !== clickedRaceDetailId) {
+            detail.classList.remove('show');
+          }
         });
+        const raceDetailDiv = document.getElementById(clickedRaceDetailId);
+        raceDetailDiv.classList.toggle('show');
+      });
     });
-});
-
-
+  });
 </script>
-<h1 class="h1title">Today's Jumps Races (UK & Ireland)</h1>
-<h5 class='text-center mt-4'> {{ race_date }}</h5>
 
+<h1 class="h1title">Today's Jumps Races (UK & Ireland)</h1>
+<h5 class="text-center mt-4">{{ race_date }}</h5>
 
 <div class="container-horse">
-    {% for course, races in races_by_course.items %}
-        <div class="racecourse">
-            <div class="row align-items-center justify-content-center">
-                <!-- Course Name Column -->
-                <div class="col-md-3 text-center">
-                    <h3>{{ course }}</h3>
-                </div>
-
-                <!-- Race Times Column -->
-                <div class="col-md-6 text-start">
-                    {% for race in races %}
-                        <a href="#{{ race.race_name_slug }}" data-toggle="collapse" aria-expanded="false" class="race-time-link">
-                            {{ race.start_time }}
-                        </a>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Race Details -->
-            {% for race in races %}
-                <div class="collapse" id="{{ race.race_name_slug }}">
-                    <div class="card card-body text-center race-details">
-                        <!-- Race details as before -->
-                        <p class="fw-bold fs-3 p-3">{{ race.race_name }}  ({{race.race_type }})</p>
-                        <div class="race-box">
-                        <ul>
-                            <li class="mb-3">
-                                <span class="race-detail"><strong>Starters:</strong> {{ race.field_size }}</span>
-                                <span class="race-detail"><strong>Distance:</strong> {{ race.race_distance }} </span>
-                                <span class="race-detail"><strong>Age:</strong> {{ race.age_band }}</span>
-                            </li>
-                            <li class="mb-4 pb-3">
-                                <span class="race-detail"><strong>Prize:</strong> {{ race.prize }}</span>
-                                <span class="race-detail"><strong>Going:</strong> {{ race.going }}</span>
-                                <span class="race-detail"><strong>Class:</strong> {{ race.race_class }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                        <!-- Runner Details Table -->
-                        <table>
-                            <thead class="backtable">
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Horse</th>
-                                    <th>Form</th>
-                                    <th>Age</th>
-                                    <th>Lbs</th>
-                                    <th>Jockey</th>
-                                    <th>Trainer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for runner in race.runners %}
-                                    <tr>
-                                        <td>{{ runner.number }}</td>
-                                        <td class="horsefont">{{ runner.horse }}</tdclass>
-                                        <td>{{ runner.form }}</td>
-                                        <td>{{ runner.age }}</td>
-                                        <td>{{ runner.lbs }}</td>
-                                        <td>{{ runner.jockey }}</td>
-                                        <td>{{ runner.trainer }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            {% endfor %}
+  {% for course, races in races_by_course.items %}
+    <div class="racecourse">
+      <div class="row align-items-center justify-content-center">
+        <!-- Course Name Column -->
+        <div class="col-md-3 text-center">
+          <h3>{{ course }}</h3>
         </div>
-    {% endfor %}
+        <!-- Race Times Column -->
+        <div class="col-md-4 text-start">
+          {% for race in races %}
+            <a href="#{{ race.race_name_slug }}" data-toggle="collapse" aria-expanded="false" class="race-time-link">
+              {{ race.start_time }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Race Details -->
+      {% for race in races %}
+        <div class="collapse" id="{{ race.race_name_slug }}">
+          <div class="card card-body text-center race-details">
+            <p class="fw-bold fs-3 p-3">{{ race.race_name }} ({{ race.race_type }})</p>
+            <div class="race-box">
+              <ul>
+                <li class="mb-3">
+                  <span class="race-detail"><strong>Starters:</strong> {{ race.field_size }}</span>
+                  <span class="race-detail"><strong>Distance:</strong> {{ race.race_distance }}</span>
+                  <span class="race-detail"><strong>Age:</strong> {{ race.age_band }}</span>
+                </li>
+                <li class="mb-4 pb-3">
+                  <span class="race-detail"><strong>Prize:</strong> {{ race.prize }}</span>
+                  <span class="race-detail"><strong>Going:</strong> {{ race.going }}</span>
+                  <span class="race-detail"><strong>Class:</strong> {{ race.race_class }}</span>
+                </li>
+              </ul>
+            </div>
+            <!-- Wrap the table in a responsive container -->
+            <div class="responsive-table-container">
+              <table>
+                <thead class="backtable">
+                  <tr>
+                    <th>No.</th>
+                    <th>Horse</th>
+                    <th>Form</th>
+                    <th>Age</th>
+                    <th>Lbs</th>
+                    <th>Jockey</th>
+                    <th>Trainer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for runner in race.runners %}
+                    <tr>
+                      <td>{{ runner.number }}</td>
+                      <td class="horsefont">{{ runner.horse }}</td>
+                      <td>{{ runner.form }}</td>
+                      <td>{{ runner.age }}</td>
+                      <td>{{ runner.lbs }}</td>
+                      <td>{{ runner.jockey }}</td>
+                      <td>{{ runner.trainer }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
 </div>
 {% endblock %}
-
