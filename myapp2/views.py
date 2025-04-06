@@ -178,7 +178,10 @@ def results(request):
 
     return render(request, 'results.html', data)
 
-
+def keep_alive(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT 1")  # Simple query to keep the database connection active
+    return JsonResponse({"status": "Database connection is active"})
 
 
 import time

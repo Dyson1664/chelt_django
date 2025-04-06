@@ -14,6 +14,7 @@ urlpatterns = [
     path('results/', views.results, name='results'),
     path('test/', views.test, name='test'),
     path('test-cache/', views.test_cache, name='test_cache'),
+    path('keep-alive/', views.keep_alive, name='keep_alive')
 
 ]
 
